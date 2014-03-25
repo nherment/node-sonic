@@ -1,3 +1,4 @@
+[![Build Status](https://api.travis-ci.org/nherment/node-worky.png?branch=master)](https://travis-ci.org/nherment/node-worky)
 
 
 Worky is a customisable workflow engine with some nice out of the box features.
