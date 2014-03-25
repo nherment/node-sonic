@@ -4,7 +4,9 @@ var EventEmitter = require("events").EventEmitter;
 var Tree = require('./lib/Tree.js')
 
 var globalActions = {
-  "wy-filter": require('./lib/action/filter.js')
+  "wy-logger"     : require('./lib/action/logger.js'),
+  "wy-filter"     : require('./lib/action/filter.js'),
+  "wy-set"        : require('./lib/action/set.js')
 }
 
 function Worky(flow) {
@@ -46,10 +48,13 @@ Worky.prototype.action = function(actionName) {
   if(!func) {
     throw new Error('unkown action ['+actionName+']')
   }
-  return actionName
+  return func
 }
 
 function Runner(node, data, worky) {
+  if(!data) {
+    throw new Error('missing data')
+  }
   EventEmitter.call(this);
   this._node = node
   this._data = data
@@ -64,8 +69,10 @@ Runner.prototype.modified = function() {
 }
 Runner.prototype.run = function() {
   // TODO: support timeout in options and enforce it
-  var func = this._worky.action(this._options().action)
-  func.call(this, this._data, this._options)
+  var options = this._node.options()
+  var func = this._worky.action(options.action)
+  //console.log('run', options.action, this._data, options)
+  func.call(this, this._data, options)
 }
 
 Runner.prototype.next = function(modified) {
@@ -114,3 +121,4 @@ Runner.prototype.reject = function(err) {
   this.emit('reject', err)
 }
 
+module.exports = Worky
