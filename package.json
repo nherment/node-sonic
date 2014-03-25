@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/nherment/node-worky",
   "dependencies": {
-    "underscore": "^1.6.0"
+    "underscore": "1.6.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
   }
 }
