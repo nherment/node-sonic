@@ -5,7 +5,7 @@ var assert = require('assert')
 var Tree = require('../lib/Tree.js')
 
 
-var basicFlow = [{
+var basicForkFlow = [{
     "action": "action1"
   },
   {
@@ -33,7 +33,7 @@ var basicFlow = [{
 describe('Tree', function() {
 
   it('basic fork', function() {
-    var tree = new Tree(basicFlow)
+    var tree = new Tree(basicForkFlow)
     var action1 = tree.root()
     assert.ok(action1)
     assert.ok(action1.options())

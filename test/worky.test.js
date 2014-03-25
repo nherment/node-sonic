@@ -82,26 +82,25 @@ var flow = [
 
 describe('basic flow', function() {
 
-//  it('fork1', function(done) {
-//    var worky = new Worky(flow)
-//    var entity = {name: "entity1", status: "new"}
-//    worky.run(entity, function(err) {
-//      assert.ok(!err)
-//      assert.equal(entity.filter, 1)
-//      done()
-//    })
-//  })
-//
-//  it('fork2', function(done) {
-//    var worky = new Worky(flow)
-//    worky.printTreeFlow()
-//    var entity = {name: "entity2", status: "open"}
-//    worky.run(entity, function(err) {
-//      assert.ok(!err)
-//      assert.equal(entity.filter, 2)
-//      done()
-//    })
-//  })
+  it('fork1', function(done) {
+    var worky = new Worky(flow)
+    var entity = {name: "entity1", status: "new"}
+    worky.run(entity, function(err) {
+      assert.ok(!err)
+      assert.equal(entity.filter, 1)
+      done()
+    })
+  })
+
+  it('fork2', function(done) {
+    var worky = new Worky(flow)
+    var entity = {name: "entity2", status: "open"}
+    worky.run(entity, function(err) {
+      assert.ok(!err)
+      assert.equal(entity.filter, 2)
+      done()
+    })
+  })
 
   it('modified objects are re-processed', function(done) {
     var worky = new Worky(flow)
