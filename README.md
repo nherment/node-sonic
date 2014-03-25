@@ -37,7 +37,7 @@ Let's assume we have a business logic that deals with tickets.
 - the first branch has a filter that checks if the ticket is in 'open' state. Therefore all subsequent actions of this
 branch will apply to a ticket that is 'opened'. Another filter of this branch only applies if the ticket is marked as
 'spam'. If so, the ticket status is changed to 'closed'.
-- the second branch only applies to 'closed' tickets and then archive the ticket if it matches the criteria.
+- the second branch only applies to 'closed' tickets and then archive the ticket.
 
 The decision tree would look like this:
 
@@ -58,7 +58,7 @@ if the ```[close]``` action marks the ticket as 'modified' (using ```this.next(t
 to the top of the decision tree, be recognised as ```[closed]``` and end up being archived.
 
 This is the behaviour that you want because it makes sure that the data exits the workflow in a 'stable' state (meaning
-there is no work left un-done)
+there is no work left to do)
 
 ### custom actions
 
