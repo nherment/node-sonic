@@ -35,7 +35,6 @@ describe('Tree', function() {
   it('basic fork', function() {
     var tree = new Tree(basicFlow)
     var action1 = tree.root()
-    action1.print()
     assert.ok(action1)
     assert.ok(action1.options())
     assert.equal(action1.options().action, "action1")

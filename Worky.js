@@ -19,7 +19,7 @@ Worky.prototype.register = function(name, func) {
 }
 
 Worky.prototype.run = function(object, callback) {
-  this.printTreeFlow()
+  //this.printTreeFlow()
   var self = this
   var runner = new Runner(this._tree.root(), object, this)
   runner.on('reject', function(err) {
@@ -76,7 +76,7 @@ Runner.prototype.run = function() {
   // TODO: support timeout in options and enforce it
   var options = this._node.options()
   var func = this._worky.action(options.action)
-  console.log('run', options.action, JSON.stringify(this._data), JSON.stringify(options))
+  //console.log('run', options.action, JSON.stringify(this._data), JSON.stringify(options))
   func.call(this, this._data, options)
 }
 

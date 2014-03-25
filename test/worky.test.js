@@ -46,7 +46,8 @@ var flow = [
           "name": "entity3, secondPass",
           "attributes": {
             "name": "entity3",
-            "secondPass": true
+            "secondPass": true,
+            "success": null
           }
         },
         {
@@ -56,7 +57,7 @@ var flow = [
             "success": true
           }
         }
-      ]
+      ],
       [
         {
           "action": "wy-filter",
