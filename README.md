@@ -75,7 +75,7 @@ a custom action can be registered
 
       // exit the current 'branch'. optional error object. Passing an error will cause the whole workflow to stop (not
       // only the current branch)
-      this.reject()
+      this.reject(err)
     })
 
 and invoked in the workflow
@@ -86,6 +86,10 @@ and invoked in the workflow
         ...
       }
     ]
+
+
+Only one of ```this.next()``` or ```this.reject()``` can be called in a given action. Calling both will result in an
+error thrown and the workflow exited. Also, the data may end up in a corrupted state (unfinished branch execution).
 
 
 ## default actions
