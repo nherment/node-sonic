@@ -92,7 +92,7 @@ Only one of ```this.next()``` or ```this.reject()``` can be called in a given ac
 error thrown and the workflow exited. Also, the data may end up in a corrupted state (unfinished branch execution).
 
 
-## default actions
+## out of the box actions
 
 A number of actions are defined by worky. All these actions contain the ```wy-``` prefix to prevent any collision with
 your own defined actions.
