@@ -147,3 +147,41 @@ Attributes match can be nested. For example:
 will filter out any data for which does not have attribute ```info``` which is an object with attribute ```nested```
 strictly equal to ```true```.
 
+
+### wy-set
+
+Example:
+
+```
+{
+  "action": "wy-set",
+  "name": "set closed status on spam tickets",
+  "set": {
+    "status": "closed",
+    "spam": true
+  }
+}
+```
+
+Will set the ```status``` to ```"closed"``` and the attribute ```spam``` to ```true```.
+
+
+### wy-fork
+
+Example:
+
+```
+{
+  "action": "wy-fork",
+  "forks": [
+    [... workflow branch 1 ...],
+    [... workflow branch 2 ...]
+  ]
+}
+```
+
+splits the execution into 2 independent branches. Both branches will share the same ```data``` object and are executed
+sequentially:
+- first branch 1 is fully executed
+- then branch 2 is fully executed
+- then the flow resume the parent branch where it left it (except if both branches rejected the data).
