@@ -19,6 +19,7 @@ Worky.prototype.register = function(name, func) {
 }
 
 Worky.prototype.run = function(object, callback) {
+  this.printTreeFlow()
   var self = this
   var runner = new Runner(this._tree.root(), object, this)
   runner.on('reject', function(err) {
@@ -51,6 +52,10 @@ Worky.prototype.action = function(actionName) {
   return func
 }
 
+Worky.prototype.printTreeFlow = function() {
+  this._tree.root().print()
+}
+
 function Runner(node, data, worky) {
   if(!data) {
     throw new Error('missing data')
@@ -71,7 +76,7 @@ Runner.prototype.run = function() {
   // TODO: support timeout in options and enforce it
   var options = this._node.options()
   var func = this._worky.action(options.action)
-  //console.log('run', options.action, this._data, options)
+  console.log('run', options.action, JSON.stringify(this._data), JSON.stringify(options))
   func.call(this, this._data, options)
 }
 
@@ -89,6 +94,7 @@ Runner.prototype.next = function(modified) {
       runner.on('next', function() {
         if(!calbackInvoked) {
           calbackInvoked = true
+          self._modified = self._modified || runner.modified()
           nextChild()
         } else {
           // TODO: use a logger
