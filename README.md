@@ -187,7 +187,7 @@ It is also possible to combine multiple query parameters:
 }
 ```
 
-### wy-set
+## wy-set
 
 Example:
 
@@ -205,7 +205,7 @@ Example:
 Will set the ```status``` to ```"closed"``` and the attribute ```spam``` to ```true```.
 
 
-### wy-fork
+## wy-fork
 
 Example:
 
