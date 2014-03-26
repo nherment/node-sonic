@@ -17,7 +17,6 @@ WorkyMock.prototype.reject = function(fn) {
   } else {
     throw new Error('unexpected call to "reject()"')
   }
-
 }
 
 WorkyMock.prototype.next = function(fn) {

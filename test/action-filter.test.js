@@ -119,17 +119,37 @@ describe('filter', function() {
 
   })
 
-  it('attribute name can define a regexp as value (mismatch)', function(done) {
-    var worky = new WorkyMock(filter, {attributes: {"name": "/^entity.*$/"}})
+  it('attribute name can define a regexp as value (match, case insensitive)', function(done) {
+    var worky = new WorkyMock(filter, {attributes: {"name": "/^entity.*$/i"}})
 
     worky.reject(function() {
+      assert.fail('unexpected reject')
+    })
+    worky.next(function() {
       done()
+    })
+
+    worky.run({name: "EnTiTyXYZ"})
+
+  })
+
+  it('attribute name can define a regexp as value (mismatch, case sensitive)', function(done) {
+    var worky = new WorkyMock(filter, {attributes: {"name": "/^entity.*$/"}})
+
+    var rejectCount = 0
+    worky.reject(function() {
+      rejectCount ++
+      if(rejectCount === 3) {
+        done()
+      }
     })
     worky.next(function() {
       assert.fail('unexpected next')
     })
 
     worky.run({name: "entit"})
+    worky.run({name: " entityXYZ"})
+    worky.run({name: "foobarentityXYZ"})
 
   })
 
