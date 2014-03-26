@@ -105,5 +105,47 @@ describe('filter', function() {
 
   })
 
+  it('attribute name can define a regexp as value (match)', function(done) {
+    var worky = new WorkyMock(filter, {attributes: {"name": "/^entity.*$/"}})
+
+    worky.reject(function() {
+      assert.fail('unexpected reject')
+    })
+    worky.next(function() {
+      done()
+    })
+
+    worky.run({name: "entityXYZ"})
+
+  })
+
+  it('attribute name can define a regexp as value (mismatch)', function(done) {
+    var worky = new WorkyMock(filter, {attributes: {"name": "/^entity.*$/"}})
+
+    worky.reject(function() {
+      done()
+    })
+    worky.next(function() {
+      assert.fail('unexpected next')
+    })
+
+    worky.run({name: "entit"})
+
+  })
+
+  it('attribute name can define a regexp as value (missing)', function(done) {
+    var worky = new WorkyMock(filter, {attributes: {"name": "/^entity.*$/"}})
+
+    worky.reject(function() {
+      done()
+    })
+    worky.next(function() {
+      assert.fail('unexpected next')
+    })
+
+    worky.run({name: null})
+
+  })
+
 
 })
