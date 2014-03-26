@@ -4,12 +4,12 @@
 Worky is a customisable workflow engine with some nice out of the box features.
 
 
-### install
+# install
 
     npm install --save worky
 
 
-### use
+# use
 
     var Worky = require('worky')
 
@@ -20,7 +20,7 @@ Worky is a customisable workflow engine with some nice out of the box features.
       // data as modified by worky
     })
 
-### workflow
+# workflow
 
 The workflow can be seen as a decision tree. An object is passed to the top of the tree through
 ```worky.run(object, ...)```. Each node can take the decision to modify the object, then reject or pass it to a child
@@ -60,7 +60,7 @@ to the top of the decision tree, be recognised as ```[closed]``` and end up bein
 This is the behaviour that you want because it makes sure that the data exits the workflow in a 'stable' state (meaning
 there is no work left to do)
 
-### custom actions
+# custom actions
 
 a custom action can be registered
 
@@ -92,14 +92,14 @@ Only one of ```this.next()``` or ```this.reject()``` can be called in a given ac
 error thrown and the workflow exited. Also, the data may end up in a corrupted state (unfinished branch execution).
 
 
-## out of the box actions
+# out of the box actions
 
 A number of actions are defined by worky. All these actions contain the ```wy-``` prefix to prevent any collision with
 your own defined actions.
 Although you can override these actions by registering them yourself (eg. ```worky.register('wy-filter', ...)```) it is
 recommended that you register your actions with your own prefix so that it can act as a namespace.
 
-### wy-filter
+## wy-filter
 
 Example:
 
@@ -120,6 +120,8 @@ will filter out (ie. reject from the current workflow branch) any data for which
 - attribute ```secondPass``` is not strictly equal to ```true```
 - attribute ```success``` is "truthy"
 
+### regular expressions
+
 Attributes can also contain a regular expression. for example:
 
 ```
@@ -132,6 +134,8 @@ Attributes can also contain a regular expression. for example:
 ```
 
 will filter out any data for which the ```name``` attribute is not a string which starts with ```caramel```.
+
+### nested values
 
 Attributes match can be nested. For example:
 
@@ -147,6 +151,41 @@ Attributes match can be nested. For example:
 will filter out any data for which does not have attribute ```info``` which is an object with attribute ```nested```
 strictly equal to ```true```.
 
+### queries
+
+Attributes match can use a query like language for matching:
+
+```
+{
+  "action": "wy-filter",
+  "attributes": {
+    "price"     : {$gt: 34},
+    "discount"  : {$lt: 0.1}
+    "status"    : {$in: ['open', 'new']}
+  }
+}
+```
+
+Available query parameters are:
+
+- ```$gt``` strictly greater than
+- ```$gte``` greater or equal to
+- ```$lt``` strictly less than
+- ```$lte``` less or equal to
+- ```$in``` which value strictly match one of these (array)
+- ```$nin``` which value strictly match **none** of these (array)
+
+It is also possible to combine multiple query parameters:
+
+
+```
+{
+  "action": "wy-filter",
+  "attributes": {
+    "price"     : {$gt: 34, $lt: 100}
+  }
+}
+```
 
 ### wy-set
 
