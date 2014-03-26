@@ -13,9 +13,6 @@ describe('filter', function() {
     worky.reject(function() {
       assert.fail('unexpected reject')
     })
-    worky.modify(function() {
-      assert.fail('unexpected modify')
-    })
     worky.next(function() {
       done()
     })
@@ -29,9 +26,6 @@ describe('filter', function() {
 
     worky.reject(function() {
       assert.fail('unexpected reject')
-    })
-    worky.modify(function() {
-      assert.fail('unexpected modify')
     })
     worky.next(function() {
       done()
@@ -47,9 +41,6 @@ describe('filter', function() {
     worky.reject(function() {
       assert.fail('unexpected reject')
     })
-    worky.modify(function() {
-      assert.fail('unexpected modify')
-    })
     worky.next(function() {
       done()
     })
@@ -64,14 +55,53 @@ describe('filter', function() {
     worky.reject(function() {
       done()
     })
-    worky.modify(function() {
-      assert.fail('unexpected modify')
-    })
     worky.next(function() {
       assert.fail('unexpected next')
     })
 
     worky.run({name: "entity1", status: "new"})
+
+  })
+
+  it('attribute name can represent a nested value (match)', function(done) {
+    var worky = new WorkyMock(filter, {attributes: {"info.type": "cheese"}})
+
+    worky.reject(function() {
+      assert.fail('unexpected reject')
+    })
+    worky.next(function() {
+      done()
+    })
+
+    worky.run({info: {type: "cheese"}})
+
+  })
+
+  it('attribute name can represent a nested value (mismatch)', function(done) {
+    var worky = new WorkyMock(filter, {attributes: {"info.type": "cheese"}})
+
+    worky.reject(function() {
+      done()
+    })
+    worky.next(function() {
+      assert.fail('unexpected reject')
+    })
+
+    worky.run({info: {type: "ham"}})
+
+  })
+
+  it('attribute name can represent a nested value (missing nested object)', function(done) {
+    var worky = new WorkyMock(filter, {attributes: {"info.type": "cheese"}})
+
+    worky.reject(function() {
+      done()
+    })
+    worky.next(function() {
+      assert.fail('unexpected reject')
+    })
+
+    worky.run({})
 
   })
 
