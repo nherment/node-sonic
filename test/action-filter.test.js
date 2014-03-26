@@ -5,7 +5,7 @@ var filter = require('../lib/action/filter.js')
 var WorkyMock = require('./mock/WorkyMock.js')
 
 
-describe('filter', function() {
+describe('wy-filter', function() {
 
   it('pass on no attributes defined', function(done) {
     var worky = new WorkyMock(filter, {})
@@ -116,7 +116,6 @@ describe('filter', function() {
     })
 
     worky.run({name: "entityXYZ"})
-
   })
 
   it('attribute name can define a regexp as value (match, case insensitive)', function(done) {
@@ -130,7 +129,6 @@ describe('filter', function() {
     })
 
     worky.run({name: "EnTiTyXYZ"})
-
   })
 
   it('attribute name can define a regexp as value (mismatch, case sensitive)', function(done) {
@@ -150,7 +148,6 @@ describe('filter', function() {
     worky.run({name: "entit"})
     worky.run({name: " entityXYZ"})
     worky.run({name: "foobarentityXYZ"})
-
   })
 
   it('attribute name can define a regexp as value (missing)', function(done) {
