@@ -1,16 +1,16 @@
 var _ = require('underscore')
 
-function WorkyMock(fn, options) {
+function SonicMock(fn, options) {
   this._func = fn
   this._options = options
   this._data = []
 }
 
-WorkyMock.prototype.run = function(data) {
+SonicMock.prototype.run = function(data) {
   this._func.call(this, data, this._options)
 }
 
-WorkyMock.prototype.reject = function(arg) {
+SonicMock.prototype.reject = function(arg) {
   if(_.isFunction(arg)) {
     this._reject = arg
   } else if(this._reject) {
@@ -20,7 +20,7 @@ WorkyMock.prototype.reject = function(arg) {
   }
 }
 
-WorkyMock.prototype.next = function(arg) {
+SonicMock.prototype.next = function(arg) {
   if(_.isFunction(arg)) {
     this._next = arg
   } else if(this._next) {
@@ -30,4 +30,4 @@ WorkyMock.prototype.next = function(arg) {
   }
 }
 
-module.exports = WorkyMock
+module.exports = SonicMock

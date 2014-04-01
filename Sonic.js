@@ -4,9 +4,9 @@ var EventEmitter = require("events").EventEmitter;
 var Tree = require('./lib/Tree.js')
 
 var globalActions = {
-  "wy-logger"     : require('./lib/action/logger.js'),
-  "wy-filter"     : require('./lib/action/filter.js'),
-  "wy-set"        : require('./lib/action/set.js')
+  "sc-logger"     : require('./lib/action/logger.js'),
+  "sc-filter"     : require('./lib/action/filter.js'),
+  "sc-set"        : require('./lib/action/set.js')
 }
 
 function Worky(flow) {

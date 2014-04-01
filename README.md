@@ -1,29 +1,29 @@
-[![Build Status](https://api.travis-ci.org/nherment/node-worky.png?branch=master)](https://travis-ci.org/nherment/node-worky)
+[![Build Status](https://api.travis-ci.org/nherment/node-sonic.png?branch=master)](https://travis-ci.org/nherment/node-sonic)
 
 
-Worky is a customisable workflow engine with some nice out of the box features.
+Sonic is a customisable workflow engine with some nice out of the box features.
 
 
 # install
 
-    npm install --save worky
+    npm install --save sonic
 
 
 # use
 
-    var Worky = require('worky')
+    var Sonic = require('sonic')
 
-    var worky = new Worky(workflow)
+    var sonic = new Sonic(workflow)
 
     var data = {attr1: 'val1', attr2: 'val2'}
-    worky.run(data, function(err) {
-      // data as modified by worky
+    sonic.run(data, function(err) {
+      // data as modified by sonic
     })
 
 # workflow
 
 The workflow can be seen as a decision tree. An object is passed to the top of the tree through
-```worky.run(object, ...)```. Each node can take the decision to modify the object, then reject or pass it to a child
+```sonic.run(object, ...)```. Each node can take the decision to modify the object, then reject or pass it to a child
 node.
 When the data has passed over all the branches (except those from which it were rejected), and if the data was modified,
 it is passed again to the top of the node. This makes sure that the data ends in a 'stable' state where all nodes agree
@@ -64,7 +64,7 @@ there is no work left to do)
 
 a custom action can be registered
 
-    worky.register(actionName, function(data, options) {
+    sonic.register(actionName, function(data, options) {
       // data is the data object
       // options contain the workflow options:
       //   options.action => the action name
@@ -94,18 +94,18 @@ error thrown and the workflow exited. Also, the data may end up in a corrupted s
 
 # out of the box actions
 
-A number of actions are defined by worky. All these actions contain the ```wy-``` prefix to prevent any collision with
+A number of actions are defined by sonic. All these actions contain the ```sc-``` prefix to prevent any collision with
 your own defined actions.
-Although you can override these actions by registering them yourself (eg. ```worky.register('wy-filter', ...)```) it is
+Although you can override these actions by registering them yourself (eg. ```sonic.register('sc-filter', ...)```) it is
 recommended that you register your actions with your own prefix so that it can act as a namespace.
 
-## wy-filter
+## sc-filter
 
 Example:
 
 ```
 {
-  "action": "wy-filter",
+  "action": "sc-filter",
   "name": "entity3, secondPass",
   "attributes": {
     "name": "entity3",
@@ -126,7 +126,7 @@ Attributes can also contain a regular expression. for example:
 
 ```
 {
-  "action": "wy-filter",
+  "action": "sc-filter",
   "attributes": {
     "name": "/^caramel/",
   }
@@ -141,7 +141,7 @@ Attributes match can be nested. For example:
 
 ```
 {
-  "action": "wy-filter",
+  "action": "sc-filter",
   "attributes": {
     "info.nested": true,
   }
@@ -157,7 +157,7 @@ Attributes match can use a query like language for matching:
 
 ```
 {
-  "action": "wy-filter",
+  "action": "sc-filter",
   "attributes": {
     "price"     : {$gt: 34},
     "discount"  : {$lt: 0.1}
@@ -180,20 +180,20 @@ It is also possible to combine multiple query parameters:
 
 ```
 {
-  "action": "wy-filter",
+  "action": "sc-filter",
   "attributes": {
     "price"     : {$gt: 34, $lt: 100}
   }
 }
 ```
 
-## wy-set
+## sc-set
 
 Example:
 
 ```
 {
-  "action": "wy-set",
+  "action": "sc-set",
   "name": "set closed status on spam tickets",
   "set": {
     "status": "closed",
@@ -205,13 +205,13 @@ Example:
 Will set the ```status``` to ```"closed"``` and the attribute ```spam``` to ```true```.
 
 
-## wy-fork
+## sc-fork
 
 Example:
 
 ```
 {
-  "action": "wy-fork",
+  "action": "sc-fork",
   "forks": [
     [... workflow branch 1 ...],
     [... workflow branch 2 ...]

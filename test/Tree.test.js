@@ -9,7 +9,7 @@ var basicForkFlow = [{
     "action": "action1"
   },
   {
-    "action": "wy-fork",
+    "action": "sc-fork",
     "forks": [
       [
         {

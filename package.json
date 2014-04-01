@@ -1,14 +1,14 @@
 {
-  "name": "worky",
+  "name": "sonic",
   "version": "0.2.0",
   "description": "workflow engine",
-  "main": "Worky.js",
+  "main": "Sonic.js",
   "scripts": {
     "test": "mocha test --reporter spec"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/nherment/node-worky.git"
+    "url": "git://github.com/nherment/node-sonic.git"
   },
   "keywords": [
     "workflow",
@@ -17,9 +17,9 @@
   "author": "Nicolas Herment <nherment@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nherment/node-worky/issues"
+    "url": "https://github.com/nherment/node-sonic/issues"
   },
-  "homepage": "https://github.com/nherment/node-worky",
+  "homepage": "https://github.com/nherment/node-sonic",
   "dependencies": {
     "underscore": "1.6.0",
     "object-tree": "0.2.0"
