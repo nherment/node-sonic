@@ -9,16 +9,24 @@ var globalActions = {
   "sc-set"        : require('./lib/action/set.js')
 }
 
-function Worky(flow) {
+function Sonic(flow) {
   this._tree = new Tree(flow)
   this._actions = {}
+  this._idleMemory = []
+  this._activeMemory = []
 }
 
-Worky.prototype.register = function(name, func) {
+Sonic.prototype.register = function(name, func) {
   this._actions[name] = func
 }
 
-Worky.prototype.run = function(object, callback) {
+Sonic.prototype.insert = function(obj) {
+  if(this._activeMemory.indexOf(obj) === -1) {
+    this._activeMemory.push(obj)
+  }
+}
+
+Sonic.prototype.run = function(object, callback) {
   //this.printTreeFlow()
   var self = this
   var runner = new Runner(this._tree.root(), object, this)
@@ -41,7 +49,7 @@ Worky.prototype.run = function(object, callback) {
   runner.run()
 }
 
-Worky.prototype.action = function(actionName) {
+Sonic.prototype.action = function(actionName) {
   var func = globalActions[actionName]
   if(!func) {
     func = this._actions[actionName]
@@ -52,7 +60,7 @@ Worky.prototype.action = function(actionName) {
   return func
 }
 
-Worky.prototype.printTreeFlow = function() {
+Sonic.prototype.printTreeFlow = function() {
   this._tree.root().print()
 }
 
@@ -127,4 +135,4 @@ Runner.prototype.reject = function(err) {
   this.emit('reject', err)
 }
 
-module.exports = Worky
+module.exports = Sonic
