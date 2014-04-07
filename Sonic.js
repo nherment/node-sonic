@@ -26,6 +26,29 @@ Sonic.prototype.insert = function(obj) {
   }
 }
 
+Sonic.prototype.memRun = function(callback) {
+  var allDone = 0
+  var errors = null
+  function done(err) {
+    if(err) {
+      if(!errors) {
+        errors = []
+      }
+      errors.push(err)
+    }
+    allDone --
+    if(allDone === 0) {
+      callback(errors)
+    }
+  }
+
+  while(this._activeMemory.length > 0) {
+    var obj = this._activeMemory.pop()
+    this.run(obj, done)
+    this._idleMemory.push(obj)
+  }
+}
+
 Sonic.prototype.run = function(object, callback) {
   //this.printTreeFlow()
   var self = this
@@ -43,7 +66,7 @@ Sonic.prototype.run = function(object, callback) {
       // TODO: prevent infinite loop
       self.run(object, callback)
     } else {
-      callback()
+      callback(undefined)
     }
   })
   runner.run()
