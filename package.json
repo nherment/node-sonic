@@ -22,7 +22,7 @@
   "homepage": "https://github.com/nherment/node-sonic",
   "dependencies": {
     "underscore": "1.6.0",
-    "object-tree": "0.2.0"
+    "object-tree": "0.2.3"
   },
   "devDependencies": {
     "mocha": "*"

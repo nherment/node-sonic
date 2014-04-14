@@ -30,4 +30,15 @@ SonicMock.prototype.next = function(arg) {
   }
 }
 
+SonicMock.prototype.inject = function(arg, cb) {
+  if(_.isFunction(arg)) {
+    this._inject = arg
+  } else if(this._inject) {
+    this._inject(arg, cb)
+  } else {
+    throw new Error('unexpected call to "inject()"')
+  }
+}
+
+
 module.exports = SonicMock

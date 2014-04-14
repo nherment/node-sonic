@@ -56,6 +56,14 @@ var flow = [
           "set": {
             "success": true
           }
+        },
+        {
+          "action": "sc-bind",
+          "name": "injection of entity4 to modify entity3",
+          "bindings": {
+            "name": "entity4",
+            "entity3": "{.}"
+          }
         }
       ],
       [
@@ -72,6 +80,24 @@ var flow = [
           "name": "entity3, set secondPass",
           "set": {
             "secondPass": true
+          }
+        }
+      ],
+      [
+        {
+          "action": "sc-filter",
+          "name": "injection, modifies entity3",
+          "attributes": {
+            "name": "entity4",
+            "injected": null
+          }
+        },
+        {
+          "action": "sc-set",
+          "name": "entity3, set injected",
+          "set": {
+            "injected": true,
+            "entity3.injected": true
           }
         }
       ]
@@ -109,9 +135,11 @@ describe('basic flow', function() {
       assert.ok(!err)
       assert.ok(entity.secondPass, "JSON 'null' value should do be falsy match")
       assert.ok(entity.success, "the entity was not re-processed")
+      assert.ok(entity.injected, "the injection did not work")
       done()
     })
   })
+
 
 
 })

@@ -6,7 +6,8 @@ var Tree = require('./lib/Tree.js')
 var globalActions = {
   "sc-logger"     : require('./lib/action/logger.js'),
   "sc-filter"     : require('./lib/action/filter.js'),
-  "sc-set"        : require('./lib/action/set.js')
+  "sc-set"        : require('./lib/action/set.js'),
+  "sc-bind"       : require('./lib/action/bind.js')
 }
 
 function Sonic(flow) {
@@ -87,7 +88,7 @@ Sonic.prototype.printTreeFlow = function() {
   this._tree.root().print()
 }
 
-function Runner(node, data, worky) {
+function Runner(node, data, sonic) {
   if(!data) {
     throw new Error('missing data')
   }
@@ -95,7 +96,7 @@ function Runner(node, data, worky) {
   this._node = node
   this._data = data
   this._modified = false
-  this._worky = worky
+  this._sonic = sonic
 }
 
 util.inherits(Runner, EventEmitter);
@@ -103,10 +104,11 @@ util.inherits(Runner, EventEmitter);
 Runner.prototype.modified = function() {
   return this._modified
 }
+
 Runner.prototype.run = function() {
   // TODO: support timeout in options and enforce it
   var options = this._node.options()
-  var func = this._worky.action(options.action)
+  var func = this._sonic.action(options.action)
   //console.log('run', options.action, JSON.stringify(this._data), JSON.stringify(options))
   func.call(this, this._data, options)
 }
@@ -121,7 +123,7 @@ Runner.prototype.next = function(modified) {
     if(children && children.length > 0) {
       var calbackInvoked = false
       var node = children.shift()
-      var runner = new Runner(node, self._data, self._worky)
+      var runner = new Runner(node, self._data, self._sonic)
       runner.on('next', function() {
         if(!calbackInvoked) {
           calbackInvoked = true
@@ -156,6 +158,15 @@ Runner.prototype.next = function(modified) {
 
 Runner.prototype.reject = function(err) {
   this.emit('reject', err)
+}
+
+Runner.prototype.inject = function(data, callback) {
+  this._sonic.run(data, function() {
+    if(callback) {
+      callback(undefined)
+    }
+  })
+
 }
 
 module.exports = Sonic
