@@ -121,12 +121,12 @@ Runner.prototype.next = function(modified) {
   function nextChild() {
     // it is important here to have a depth first approach when walking the tree
     if(children && children.length > 0) {
-      var calbackInvoked = false
+      var callbackInvoked = false
       var node = children.shift()
       var runner = new Runner(node, self._data, self._sonic)
       runner.on('next', function() {
-        if(!calbackInvoked) {
-          calbackInvoked = true
+        if(!callbackInvoked) {
+          callbackInvoked = true
           self._modified = self._modified || runner.modified()
           nextChild()
         } else {
@@ -137,10 +137,11 @@ Runner.prototype.next = function(modified) {
       runner.on('reject', function(err) {
         // TODO: log errors that happen in a fork but do not propagate them
         if(err) {
-          console.error(err, node.options())
+          self.reject(err) // propagate the error
+          return // game over because of the error
         }
-        if(!calbackInvoked) {
-          calbackInvoked = true
+        if(!callbackInvoked) {
+          callbackInvoked = true
           nextChild()
         } else {
           // TODO: use a logger

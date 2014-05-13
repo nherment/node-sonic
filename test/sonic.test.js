@@ -11,6 +11,19 @@ var flow = [
       [
         {
           "action": "sc-filter",
+          "name": "error only",
+          "attributes": {
+            "error": true
+          }
+        },
+        {
+          "action": "reject-with-error",
+          "name": "reject-with-error"
+        }
+      ],
+      [
+        {
+          "action": "sc-filter",
           "name": "new only",
           "attributes": {
             "status": "new"
@@ -139,6 +152,21 @@ describe('basic flow', function() {
       done()
     })
   })
+
+  it('reject with error should stop the flow and report an error', function(done) {
+    var sonic = new Sonic(flow)
+    sonic.register('reject-with-error', function(data, options) {
+      this.reject(new Error('foobar'))
+    })
+    var entity = {name: "entity3", error: true}
+    sonic.run(entity, function(err) {
+      assert.ok(err)
+      assert.equal(err.message, 'foobar')
+      assert.ok(!entity.secondPass, "should not have gone through second pass")
+      done()
+    })
+  })
+
 
 
 
