@@ -1,6 +1,6 @@
 {
   "name": "sonic",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "workflow engine",
   "main": "Sonic.js",
   "scripts": {
